@@ -1,6 +1,6 @@
 import os
 from os import walk,path
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect
 import pandas as pd
 import numpy as np
 import joblib
@@ -17,8 +17,9 @@ model=joblib.load('./static/model/multinomial-db.pkl')
 df=pd.read_csv('./static/data/spam.csv',usecols=['v1','v2'], encoding='latin-1')
 stemmer=PorterStemmer()
 @app.route('/')
-def home():
-    return render_template('index.html')
+def home(message=""):
+    redirect('/')
+    return render_template('index.html',message=message)
 
 @app.route('/predict/',methods=['POST','GET'])
 def predict():
@@ -26,6 +27,8 @@ def predict():
         print("\n\n\n\n\n\n\n")
         sentence=request.form.get('sentence')
         print('sentence===>',sentence)
+        if(sentence==""):
+            return home(message='Enter your Message')
         result=preprocess_and_predict(request.form.get('sentence'))
         print("\n\n\n\n\n\n\n")
         print("\n\n\n\n\n\n\n")
