@@ -5,9 +5,9 @@ import pandas as pd
 import numpy as np
 import joblib
 import nltk
-# nltk.download('all')
 nltk.download('punkt')
 nltk.download('stopwords')
+# nltk.download('all')
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 import re
